@@ -52,7 +52,7 @@ public class Tareas
     {
         this.tareaID = tareaID;
         this.descripcion = descripcion;
-        this.duracion = duracion - 1;
+        this.duracion = duracion;
         Estado = estadoDeTarea;
     }
 

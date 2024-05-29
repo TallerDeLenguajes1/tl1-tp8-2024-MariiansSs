@@ -1,38 +1,60 @@
 ﻿using Tarea;
-Console.WriteLine("Hello, World!");
 
 List<Tareas> tareasPendientes = new List<Tareas>();
 List<Tareas> tareasRealizadas = new List<Tareas>();
-
 Random random = new Random();
-
 int n = random.Next(1,20);
+string tareaBuscar;
 
-for (int i = 0; i < n; i++)
+tareasPendientes = crearTareasPendientes(n);
+mostrarTareas(tareasPendientes);
+moverTareas(tareasPendientes, tareasRealizadas);
+
+Console.WriteLine("Ingrese la tarea a buscar");
+tareaBuscar = Console.ReadLine();
+buscarTarea(tareasPendientes, tareaBuscar);
+
+static List<Tareas> crearTareasPendientes(int n)
 {
-    Tareas tarea = new Tareas(i, $"Tarea Pendiente {i+1}",20,estadoTarea.Pendiente);
-    tareasPendientes.Add(tarea);
-}
 
-foreach (Tareas mostrarTarea in tareasPendientes)
-{
-    Console.WriteLine(mostrarTarea.Descripcion);
-}
-
-moverTareas(tareasPendientes,tareasRealizadas);
-
-
-static void moverTareas(List<Tareas> tareasPendientes,List<Tareas> tareasRealizadas)
-{
-    foreach (Tareas buscar in tareasPendientes)
+    List<Tareas> tareas = new List<Tareas>();
+    for (int i = 0; i < n; i++)
     {
-        tareasRealizadas.Add(buscar);
-        tareasPendientes.Remove(buscar);
+        Tareas tarea = new Tareas(i+1, $"Tarea Pendiente {i+1}",20,estadoTarea.Pendiente);
+        tareas.Add(tarea);
+    }
+    return tareas;
+}
+
+static void mostrarTareas(List<Tareas> tareasPendientes)
+{
+    foreach (var elementos in tareasPendientes)
+    {
+        Console.WriteLine(elementos.TareaID);
+        Console.WriteLine(elementos.Descripcion);
+        Console.WriteLine(elementos.Duracion);
+        Console.WriteLine(elementos.Estado);
     }
 }
 
+static void moverTareas(List<Tareas> tareasPendientes, List<Tareas> tareasRealizadas)
+{
+    foreach (var elementos in tareasPendientes)
+    {
+        elementos.Estado = estadoTarea.Realizada;
+        tareasRealizadas.Add(elementos);
+    }
+}
 
-
-
+static void buscarTarea(List<Tareas> tareasPendientes, string tareaBuscar)
+{
+    foreach (var tareaP in tareasPendientes)
+    {
+        if(tareaP.Descripcion == tareaBuscar)
+        {
+            Console.WriteLine($"El numero de la tarea buscada es: {tareaP.TareaID} ");
+        }
+    }
+}
 
 
